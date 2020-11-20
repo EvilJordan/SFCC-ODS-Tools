@@ -48,6 +48,9 @@ The last line, `SFCC_SANDBOX_API_POLLING_TIMEOUT` changes the default timeout of
 ```
 # Establish some variables
 REALM=<REALM-ID>
+SITENAME=<SITENAME> # This doesn't really matter except for output display purposes. Perhaps someone more clever than me can figure out how to *efficiently* list the contents of the SITEFILE and auto-extract the site names for pretty output
+CODEFILE=<CODEFILE> # version1.zip
+SITEFILE=<SITEFILE> # sfra.zip
 
 # Create auth connection
 echo "Establishing client auth credentials..."
@@ -66,13 +69,13 @@ echo $'\e[33mSandbox ID: \e[1;33m'$SANDBOX_ID$'\e[0m\n'
 
 # Deploy code to instance (activates automatically)
 echo "Deploying and activating code on instance..."
-sfcc-ci code:deploy version1.zip --instance $INSTANCE_HOST
+sfcc-ci code:deploy $CODEFILE --instance $INSTANCE_HOST
 
 # Deploy data to instance
-echo "Deploying site (RefArch) to instance..."
-sfcc-ci instance:upload backup.zip --instance $INSTANCE_HOST
-echo "Importing site (RefArch) to instance..."
-sfcc-ci instance:import backup.zip --instance $INSTANCE_HOST --sync --json | jq -r .exit_status.code
+echo "Deploying site ($SITENAME) to instance..."
+sfcc-ci instance:upload $SITEFILE --instance $INSTANCE_HOST
+echo "Importing site ($SITENAME) to instance..."
+sfcc-ci instance:import $SITEFILE --instance $INSTANCE_HOST --sync --json | jq -r .exit_status.code
 
 # Reindex site and rebuild urls
 echo "Reindexing site..."
@@ -84,14 +87,14 @@ echo $'\n\e[1;32m'$BM_URL$'\e[0m\n'
 ```
 Change the `<REALM-ID>` to a valid realm assigned and accesible to your Account Manager USER.
 
-This script operates with two local files: `backup.zip` and `version1.zip`.
+This script operates with two local files: `CODEFILE` and `SITEFILE`, which you should change in the starting variables to your locally available archives.
 
-- `backup.zip` is a site export from a working instance. This could be SFRA or anything else.
-- `version1.zip` is a code export from a working instance.
+- `SITEFILE` is a site export from a working instance or archived build. This could be SFRA or anything else.
+- `CODEFILE` is a code export from a working instance or archived compilation.
 
-If the existing site that you're importing has `data` OCAPI rules, you'll want to manipulate them in the import file located in `backup.zip` (or whatever your site data file is named) prior to importing. This is necessary in order to append the OCAPI defaults `sfcc-ci` installs to allow it to communicate.
+If the existing site that you're importing has `data` OCAPI rules, you'll want to manipulate them in the import file located in `SITEFILE` prior to importing. This is necessary in order to append the OCAPI defaults `sfcc-ci` installs to allow it to communicate.
 
-The default `sfcc-ci` OCAPI for the `data` scope is this:
+The default `sfcc-ci` OCAPI for the `data` scope is as follows. Be sure to replace `<CLIENT-ID>` with the `SFCC_OAUTH_CLIENT_ID` environment parameter value:
 ```
 {
     "_v": "19.10",
@@ -147,4 +150,4 @@ This script operates on only the "first," or singular ODS, for convenience sake.
 
 ## Questions/Comments
 
-Make a pull request or come find me in the Unofficial Community Slack!
+Make a pull request, open an issue, or come find me in the Unofficial Community Slack! I'm very salty.
