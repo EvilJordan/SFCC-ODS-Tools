@@ -24,7 +24,29 @@ To make ODS setup and manipulation as pain-free and least-disruptive to your exi
 - A new **USER** whose only role is "Sandbox API User".
 - A new **API Client** dedicated to dealing with ODS, and needs the following settings.
 
-Apply the following settings to the API Client:
+The **USER** must have access to the appropriate _realm_. If any of the following permissions, screens, or drop-downs are missing, contact SFCC support to make sure ODS is enabled for your account and _your_ Account Manager user has permissions to access these changes.
+
+Click "Add" to access the Roles list:
+![Imgur](https://imgur.com/Qx8p85D.png)
+
+Assign the "Sandbox API User" role, and hit "Add":
+![Imgur](https://imgur.com/eEGu9dd.png)
+
+You should see the following result:
+![Imgur](https://imgur.com/hxOfiBt.png)
+
+Change the scope of the role to allow access to your realm, and/or all Sandboxes for this User, by clicking on the blue funnel to the right:
+![Imgur](https://imgur.com/uyqznkc.png)
+
+Select the appropriate organization from the dropdown, and then select the realm and/or all Sandboxes option. Click Add:
+![Imgur](https://imgur.com/uyqznkc.png)
+
+Permissions should now look similar to this:
+![Imgur](https://imgur.com/nWAdR0Q.png)
+
+Make sure to hit the "Save" Button at the bottom once finished.
+
+Apply the following settings to the **API Client**:
 ![Imgur](https://imgur.com/3eo4Oyn.png)
 
 ---
