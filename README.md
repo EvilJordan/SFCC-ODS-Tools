@@ -99,7 +99,8 @@ sfcc-ci instance:upload $SITEFILE --instance $INSTANCE_HOST
 echo "Importing site ($SITENAME) to instance..."
 sfcc-ci instance:import $SITEFILE --instance $INSTANCE_HOST --sync --json | jq -r .exit_status.code
 
-# Reindex site and rebuild urls
+# Reindex site and rebuild urls - This is an example of launching a job post site import.
+# Your use-case may vary, and the job must exist!
 echo "Reindexing site..."
 sfcc-ci job:run Reindex --instance $INSTANCE_HOST --sync --json | jq -r .exit_status.code
 echo "Rebuilding URLs..."
