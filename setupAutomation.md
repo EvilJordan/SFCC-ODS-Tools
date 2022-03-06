@@ -168,9 +168,3 @@ echo $'\e[31mDeleting Sandbox ID: \e[1;31m'$SANDBOX_ID$'\e[0m\n'
 sfcc-ci sandbox:delete --sandbox $SANDBOX_ID --noprompt
 ```
 This script operates on only the "first," or singular ODS, for convenience sake.
-
----
-
-## Questions/Comments
-
-Make a pull request, open an issue, or come find me in the Unofficial Community Slack! I'm very salty.
