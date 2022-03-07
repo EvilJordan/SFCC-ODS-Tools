@@ -24,4 +24,16 @@ Example output:
 [2021-12-06 11:21:32 GMT] user@domain.com 
 ```
 
-One could throw this into a BASH script with `USERNAME` and `PASSWORD` as constants, and then `SANDBOX` as an array to loop through and automate the spitting out of a report.
+One could throw this into a BASH script with `USERNAME` and `PASSWORD` as constants, and then `SANDBOX` as an array to loop through and automate the spitting out of a report:
+
+```bash
+declare -a INSTANCES=("realm-001.sandbox.us01.dx.commercecloud.salesforce.com" "realm-002.sandbox.us01.dx.commercecloud.salesforce.com" "realm-003.sandbox.us01.dx.commercecloud.salesforce.com") # space separated list of sandbox hostnames
+
+USERNAME=USERNAME
+PASSWORD=PASSWORD
+
+for SANDBOX in "${INSTANCES[@]}"
+do
+	curl -s --user $USERNAME':'$PASSWORD https://$SANDBOX/on/demandware.servlet/webdav/Sites/Securitylogs | grep -o '\/on\/demandware\.servlet\/webdav\/Sites\/Securitylogs\/security\-ecom-[^"]*' | xargs -I {} curl -s --user $USERNAME':'$PASSWORD https://$SANDBOX{} | grep -e 'authentication successful' | grep -ve "'"$USERNAME"'" | sed 's/\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}\)\(\.[0-9]\{3\}\)/\1/' | sort -r | uniq | head -n25 | grep -Eo "(\[.+GMT\])|'([^']+)'" | tr "'" ' ' | tr -d '\n' | sed 's/\[/\n\[/g' > $SANDBOX'.txt'
+done
+```
