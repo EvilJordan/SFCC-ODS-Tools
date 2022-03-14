@@ -112,8 +112,17 @@ Change the `<REALM-ID>` to a valid realm assigned and accesible to your Account 
 
 This script operates with two local files: `CODEFILE` and `SITEFILE`, which you should change in the starting variables to your locally available archives.
 
-- `SITEFILE` is a site export from a working instance or archived build. This could be SFRA or anything else.
-- `CODEFILE` is a code export from a working instance or archived compilation.
+- `SITEFILE` is a **site** export from a working instance or archived build. This could be SFRA or anything else.
+- `CODEFILE` is a **code** export from a working instance or archived compilation.
+
+`CODEFILE` should follow the following format (for more information, run the command `sfcc-ci code:deploy --help`:
+```
+code_version.zip
+    |-- code_version
+      |-- cartridge1
+      |-- cartridge2
+      |-- cartridge3
+```
 
 If the existing site that you're importing has `data` OCAPI rules, you'll want to manipulate them in the import file located in `SITEFILE` prior to importing. This is necessary in order to append the OCAPI defaults `sfcc-ci` installs to allow it to communicate.
 
